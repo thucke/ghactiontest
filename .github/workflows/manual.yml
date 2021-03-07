@@ -24,7 +24,7 @@ jobs:
           regex: '(.*)\/(.*)$'
           
       - name: Print tag number
-        if: ${{ steps.tag-number.outputs.group1 != '' }}
+        if: ${{ steps.tag-number.outputs.group2 != '' }}
         run: |
-          echo ${{ steps.tag-number.outputs.group1 }}
+          echo ${{ steps.tag-number.outputs.group2 }}
           
