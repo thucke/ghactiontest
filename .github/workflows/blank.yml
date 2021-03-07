@@ -25,7 +25,7 @@ jobs:
         uses: actions-ecosystem/action-regex-match@v2
         id: tag-number
         with:
-          text: "${GITHUB_REF}"
+          text: ${{ github.ref }}
           regex: '(.*)\/(.*)$'
           
       - name: Print tag number
