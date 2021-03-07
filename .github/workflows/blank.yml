@@ -19,11 +19,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Fetch latest release from thucke/TYPO3.ext.th_rating
+      - name: Fetch release details from thucke/TYPO3.ext.th_rating
         id: get_latest_release
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/{owner}/{repo}/releases/latest
+          route: GET /repos/{owner}/{repo}/releases/tags/${{ GITHUB_REF }}
           owner: thucke
           repo: TYPO3.ext.th_rating
         env:
