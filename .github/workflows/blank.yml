@@ -25,13 +25,13 @@ jobs:
         uses: actions-ecosystem/action-regex-match@v2
         id: tag-number
         with:
-          text: ${GITHUB_REF}
+          text: $GITHUB_REF
           regex: '(.*)\/(.*)$'
           
       - name: Print tag number
-        if: ${{ steps.tag-number.outputs.group2 != '' }}
+        if: ${{ steps.tag-number.outputs.group2 == '' }}
         run: |
-          echo ${{ steps.tag-number.outputs.group2 }}
+          exit 1
           
       - name: Fetch release details from thucke/TYPO3.ext.th_rating
         id: get_latest_release
