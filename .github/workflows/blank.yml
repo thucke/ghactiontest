@@ -45,5 +45,5 @@ jobs:
         run: |
           echo $release_body
         env:
-          release_body: ${{ steps.set-body.outputs.release_body}}
+          release_body: ${{ steps.set-release-body.outputs.release_body}}
           
