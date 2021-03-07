@@ -48,4 +48,4 @@ jobs:
 
       - name: Print Body variable
         run: |
-          echo "$body"
+          echo $body
