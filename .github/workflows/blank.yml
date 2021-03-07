@@ -43,9 +43,12 @@ jobs:
           echo "${{ fromJson(steps.get_latest_release.outputs.data).body }}"
 
       - name: Store fetched response
+        id: set-body
         run: |
           echo ::set-output name=body::"${{ fromJson(steps.get_latest_release.outputs.data).body }}"
 
       - name: Print Body variable
         run: |
           echo $body
+        env:
+          body: ${{ steps.set-body.outputs.body}}
