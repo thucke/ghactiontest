@@ -55,10 +55,6 @@ jobs:
       - name: Print Body variable
         run: |
           echo $body
-          echo $body >> $GITHUB_ENV
         env:
           body: ${{ steps.set-body.outputs.body}}
           
-      - name: Display body env
-        run: |
-          echo "${{ env.body }}"
