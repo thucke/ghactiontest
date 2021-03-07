@@ -17,27 +17,15 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Show GITHUB_REF
-        run: |
-          echo ${GITHUB_REF}
-          
-      - name: Test regexp
-        uses: actions-ecosystem/action-regex-match@v2
-        id: tag-number
-        with:
-          text: ${{ github.ref }}
-          regex: '(.*)\/(.*)$'
-          
-      - name: Print tag number
-        if: ${{ steps.tag-number.outputs.group2 == '' }}
-        run: |
-          exit 1
+      - name: Get version
+        id: get-version
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
           
       - name: Fetch release details from thucke/TYPO3.ext.th_rating
         id: get_latest_release
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/${{ github.repository }}/releases/tags/${{ steps.tag-number.outputs.group2 }}
+          route: GET /repos/${{ github.repository }}/releases/tags/${{ steps.get-version.outputs.version }}
           owner: dummy
           repo: TYPO3.ext.th_rating
         env:
