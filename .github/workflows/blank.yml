@@ -20,12 +20,24 @@ jobs:
       - name: Show GITHUB_REF
         run: |
           echo ${GITHUB_REF}
-    
+          
+      - name: Test regexp
+        uses: actions-ecosystem/action-regex-match@v2
+        id: tag-number
+        with:
+          text: ${GITHUB_REF}
+          regex: '(.*)\/(.*)$'
+          
+      - name: Print tag number
+        if: ${{ steps.tag-number.outputs.group2 != '' }}
+        run: |
+          echo ${{ steps.tag-number.outputs.group2 }}
+          
       - name: Fetch release details from thucke/TYPO3.ext.th_rating
         id: get_latest_release
         uses: octokit/request-action@v2.x
         with:
-          route: GET /repos/{owner}/{repo}/releases/tags/${GITHUB_REF}
+          route: GET /repos/{owner}/{repo}/releases/tags/${{ steps.tag-number.outputs.group2 }}
           owner: thucke
           repo: TYPO3.ext.th_rating
         env:
