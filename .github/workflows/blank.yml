@@ -29,13 +29,14 @@ jobs:
           echo test, and deploy your project.
           
       - name: Fetch releases from th-rating
-        id: latest-release
-        uses: satak/webrequest-action@master
+        id: get_latest_release
+        uses: octokit/request-action@v2.x
         with:
-          url: https://api.github.com/repos/thucke/TYPO3.ext.th_rating/releases/latest
-          method: GET
-          
-      - name: Print fetched response
+          route: GET /repos/{owner}/{repo}/releases/latest
+          owner: thucke
+          repo: TYPO3.ext.th_rating
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      - name: Print fetched response
         run: |
-          $output = '${{ steps.latest-release.outputs.data }}' | ConvertFrom-Json
+          $output = '${{ steps.get_latest_release.outputs.data }}' | ConvertFrom-Json
           Write-Host "$($output.body)"
