@@ -22,10 +22,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
@@ -33,6 +29,7 @@ jobs:
           echo test, and deploy your project.
           
       - name: Fetch releases from th-rating
+        id: latest-release
         uses: satak/webrequest-action@master
         with:
           url: https://api.github.com/repos/thucke/TYPO3.ext.th_rating/releases/latest
@@ -40,5 +37,5 @@ jobs:
           
       - name: Print fetched response
         run: |
-          $output = '${{ steps.webhook.outputs }}' | ConvertFrom-Json
+          $output = '${{ steps.latest-release.outputs }}' | ConvertFrom-Json
           Write-Host "$($output.body)"
