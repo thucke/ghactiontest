@@ -29,19 +29,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
 
+      #see: https://trstringer.com/github-actions-multiline-strings/
+      #substituting the %, \n, and \r characters
       - name: Store release body
         id: set-release-body
         run: |
-          RELEASE-BODY="${RELEASE-BODY//'%'/'%25'}"
-          RELEASE-BODY="${RELEASE-BODY//$'\n'/'%0A'}"
-          RELEASE-BODY="${RELEASE-BODY//$'\r'/'%0D'}"
-          echo "::set-output name=release-body::$RELEASE-BODY"
+          RELEASE_BODY="${RELEASE_BODY//'%'/'%25'}"
+          RELEASE_BODY="${RELEASE_BODY//$'\n'/'%0A'}"
+          RELEASE_BODY="${RELEASE_BODY//$'\r'/'%0D'}"
+          echo "::set-output name=release_body::$RELEASE_BODY"
         env:
-          RELEASE-BODY: ${{ fromJson(steps.get_latest_release.outputs.data).body }}
+          RELEASE_BODY: ${{ fromJson(steps.get_latest_release.outputs.data).body }}
 
       - name: Print Body variable
         run: |
-          echo $body
+          echo $release_body
         env:
-          body: ${{ steps.set-body.outputs.release-body}}
+          release_body: ${{ steps.set-body.outputs.release_body}}
           
