@@ -45,7 +45,12 @@ jobs:
       - name: Store fetched response
         id: set-body
         run: |
-          echo ::set-output name=body::"${{ fromJson(steps.get_latest_release.outputs.data).body }}"
+          BODY="${BODY//'%'/'%25'}"
+          BODY="${BODY//$'\n'/'%0A'}"
+          BODY="${BODY//$'\r'/'%0D'}"
+          echo "::set-output name=body::$BODY"
+        env:
+          BODY: ${{ fromJson(steps.get_latest_release.outputs.data).body }}
 
       - name: Print Body variable
         run: |
