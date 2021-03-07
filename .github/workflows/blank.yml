@@ -44,8 +44,8 @@ jobs:
 
       - name: Store fetched response
         run: |
-          echo ::set-output name=body::${{ fromJson(steps.get_latest_release.outputs.data).body }}
+          echo ::set-output name=body::"${{ fromJson(steps.get_latest_release.outputs.data).body }}"
 
       - name: Print Body variable
         run: |
-          echo $body
+          echo "$body"
