@@ -37,5 +37,5 @@ jobs:
           
       - name: Print fetched response
         run: |
-          $output = '${{ steps.latest-release.outputs }}' | ConvertFrom-Json
+          $output = '${{ steps.latest-release.outputs.data }}' | ConvertFrom-Json
           Write-Host "$($output.body)"
