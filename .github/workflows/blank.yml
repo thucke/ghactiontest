@@ -39,4 +39,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}      
       - name: Print fetched response
         run: |
-          $output = '${{ steps.get_latest_release.outputs.data.body }}'
+          $body = '${{ steps.get_latest_release.outputs.data.body }}'
+          echo ${body}
+          echo ::set-output name=body::$body
