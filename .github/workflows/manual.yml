@@ -27,3 +27,15 @@ jobs:
         run: |
           echo ${{ steps.get-version.outputs.version }}
           
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          extensions: intl, mbstring, json, zip, curl
+
+      - name: Install tailor
+        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
+
+      - name: Set extension version
+        run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
+        
