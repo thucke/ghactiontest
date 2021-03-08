@@ -27,7 +27,7 @@ jobs:
         run: |
           echo ${{ steps.get-version.outputs.version }}
           
-      - name: Print repository
+      - name: Print repository ${{ github.event.repository.name }}
         run: |
           echo ${{ github.event.repository.name }}
 
