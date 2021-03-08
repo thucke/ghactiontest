@@ -39,8 +39,7 @@ jobs:
       - name: Set extension version
         run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
         
-      - name: pull-request
-        uses: repo-sync/pull-request@v2
+      - name: Update changelog
+        uses: thomaseizinger/keep-a-changelog-new-release@v1
         with:
-          destination_branch: "main"
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ steps.get-version.outputs.version }}
