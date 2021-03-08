@@ -16,15 +16,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Test regexp
-        uses: actions-ecosystem/action-regex-match@v2
-        id: tag-number
-        with:
-          text: refs/tags/0.4
-          regex: '(.*)\/(.*)$'
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Get version
+        id: get-version
+        run: echo ::set-output name=version::0.4
           
       - name: Print tag number
-        if: ${{ steps.tag-number.outputs.group2 != '' }}
         run: |
-          echo ${{ steps.tag-number.outputs.group2 }}
+          echo ${{ steps.get-version.outputs.version }}
           
