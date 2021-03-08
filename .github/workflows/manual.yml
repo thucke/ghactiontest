@@ -39,20 +39,8 @@ jobs:
       - name: Set extension version
         run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
         
-      - name: Set up Python
-        uses: actions/setup-python@v1
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
         with:
-          python-version: "3.8"      
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v2
-        with:
-          commit-message: Release ${{ steps.get-version.outputs.version }}
-          labels: release, bot
-          title: "Release ${{ steps.get-version.outputs.version }}"
-          body: |
-            # Release ${{ steps.get-version.outputs.version }}
-
-            Merge this PR to update your version and changelog!
-
-            ## Included Pull Requests
-
+          destination_branch: "prtest"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
