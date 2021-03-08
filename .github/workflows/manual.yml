@@ -39,6 +39,10 @@ jobs:
       - name: Set extension version
         run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
         
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
       - name: Update version
         id: version
         run: |
