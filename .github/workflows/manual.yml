@@ -13,9 +13,29 @@ jobs:
   greet:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+    services:
+      # mysql-service Label used to access the service container
+      mysql:
+        # Docker Hub image (also with version)
+        image: mysql:5.7
+        env:
+          ## Accessing to Github secrets, where you can store your configuration
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: t3func
+        ## map the "external" 33306 port with the "internal" 3306
+        ports:
+          - 33306:3306
+        # Set health checks to wait until mysql database has started (it takes some seconds to start)
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Verify MySQL connection from host
+        run: mysql --host mysql --port 33306 -uroot -ppassword -e "SHOW DATABASES"
+        
       - name: Checkout repository
         uses: actions/checkout@v2
         
@@ -36,10 +56,3 @@ jobs:
         with:
           php-version: 7.4
           extensions: intl, mbstring, json, zip, curl
-
-      - name: Install tailor
-        run: composer global require typo3/tailor --prefer-dist --no-progress --no-suggest
-
-      - name: Set extension version
-        run: php ~/.composer/vendor/bin/tailor set-version ${{ steps.get-version.outputs.version }}
-        
