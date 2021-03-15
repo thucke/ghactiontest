@@ -20,7 +20,7 @@ jobs:
         run: sudo /etc/init.d/mysql start
 
       - name: Verify MySQL connection from host
-        run: mysql -uroot -ppassword -e "SHOW DATABASES"
+        run: mysql -uroot -proot -e "SHOW DATABASES"
         
       - name: Checkout repository
         uses: actions/checkout@v2
