@@ -16,6 +16,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Show my.cnf
+        run: sudo cat /etc/mysql/my.cnf
+        
       - name: Start database server
         run: sudo /etc/init.d/mysql start
 
