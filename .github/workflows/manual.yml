@@ -14,8 +14,16 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        php: [ '7.4', '7.3' ]
+        
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Show PHP -i
+        run: php -i | grep auth
+        
       - name: Set  ~/.my.cnf
         run: echo "[mysqld] default_authentication_plugin=mysql_native_password" > ~/.my.cnf
         
@@ -42,9 +50,3 @@ jobs:
       - name: Print repository ${{ github.event.repository.name }}
         run: |
           echo ${{ github.event.repository.name }}
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 7.4
-          extensions: intl, mbstring, json, zip, curl
